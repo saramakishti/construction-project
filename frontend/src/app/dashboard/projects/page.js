@@ -8,6 +8,7 @@ import {
 import ProjectsForm from '@/components/projects/ProjectsForm';
 import ProjectsTable from '@/components/projects/ProjectsTable';
 import { useCurrentUser } from '@/context/UserContext';
+import { fetchWorkers } from '@/services/userService';
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -36,6 +37,8 @@ export default function Projects() {
         } else {
           data = await fetchAssignedProjectsByName(currentUser?.fullName);
         }
+        const workerData = await fetchWorkers();
+        setWorkers(workerData);
         setProjects(data);
       } catch (error) {
         console.error('Error loading projects:', error);
